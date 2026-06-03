@@ -8,14 +8,19 @@ export default defineConfig(({ mode }) => {
   const isCapacitor = process.env.CAPACITOR === 'true';
 
   return {
-    // Capacitor loads bundled files from the app bundle (file://); use relative paths.
     base: isCapacitor ? './' : '/',
     plugins: [
       react(),
       tailwindcss(),
       VitePWA({
         registerType: 'autoUpdate',
-        includeAssets: ['icon.svg', 'apple-touch-icon.png', 'pwa-192.png', 'pwa-512.png'],
+        includeAssets: [
+          'icon-source.png',
+          'favicon-32.png',
+          'apple-touch-icon.png',
+          'pwa-192.png',
+          'pwa-512.png',
+        ],
         manifest: {
           name: 'נחש אותי - משחק מסיבה ישראלי',
           short_name: 'נחש אותי',
@@ -23,8 +28,8 @@ export default defineConfig(({ mode }) => {
             'משחק מסיבה של "מי אני?" עם קטגוריות ישראליות ומולטיפלייר בזמן אמת',
           lang: 'he',
           dir: 'rtl',
-          theme_color: '#000000',
-          background_color: '#000000',
+          theme_color: '#5b21b6',
+          background_color: '#5b21b6',
           display: 'standalone',
           orientation: 'portrait',
           start_url: '/',
@@ -47,12 +52,6 @@ export default defineConfig(({ mode }) => {
               sizes: '512x512',
               type: 'image/png',
               purpose: 'maskable',
-            },
-            {
-              src: 'icon.svg',
-              sizes: 'any',
-              type: 'image/svg+xml',
-              purpose: 'any',
             },
           ],
         },

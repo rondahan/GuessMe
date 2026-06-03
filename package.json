@@ -11,6 +11,7 @@
     "clean": "rm -rf dist",
     "lint": "tsc --noEmit",
     "icons": "node scripts/generate-pwa-icons.mjs",
+    "cap:assets": "npx capacitor-assets generate --assetPath assets --iconBackgroundColor '#5b21b6' --splashBackgroundColor '#5b21b6'",
     "postinstall": "node scripts/generate-pwa-icons.mjs || true",
     "cap:sync": "npm run build:cap && npx cap sync",
     "cap:ios": "npm run cap:sync && npx cap open ios",
@@ -28,6 +29,7 @@
     "react-dom": "^19.0.1"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@capacitor/cli": "^7.4.2",
     "@types/node": "^22.14.0",
     "autoprefixer": "^10.4.21",

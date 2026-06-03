@@ -41,15 +41,19 @@ npm run preview
 
 `vercel.json` ו-`netlify.toml` כבר מוגדרים ל-SPA.
 
-## PWA
+## PWA ואייקון
 
-אחרי deploy ב-HTTPS: התקנה למסך הבית. אייקונים: `npm run icons`.
+מקור האייקון: `public/icon-source.png`. יצירת גדלים: `npm run icons`.
+
+אחרי deploy ב-HTTPS: התקנה למסך הבית.
 
 ## iOS (Capacitor)
 
 ```bash
+npm run icons
 npm run build:cap
 npx cap add ios
+npm run cap:assets   # אייקון + splash ל-iOS/Android
 npm run cap:ios
 ```
 
