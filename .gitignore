@@ -1,0 +1,22 @@
+node_modules
+dist
+.DS_Store
+
+# Secrets and local env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+credentials.json
+serviceAccount*.json
+
+# Legacy / generated Firebase exports (do not commit)
+firebase-applet-config.json
+firebase-blueprint.json
+metadata.json
+assets/.aistudio/
+
+ios/App/public
+android/app/src/main/assets/public

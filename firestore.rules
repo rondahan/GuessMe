@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Catch-all safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Basic syntax helpers
+    function isValidId(id) {
+      return id is string && id.size() <= 64 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Room schema validation helper
+    function isValidRoom(data) {
+      return data.id is string && data.id.size() <= 10
+          && data.code is string && data.code.size() <= 10
+          && data.categoryName is string && data.categoryName.size() <= 100
+          && data.categoryId is string && data.categoryId.size() <= 50
+          && data.status is string && (data.status == 'lobby' || data.status == 'active' || data.status == 'summary')
+          && data.creatorId is string && data.creatorId.size() <= 128
+          && data.activePlayerIndex is int
+          && data.timeLeft is int
+          && data.isTimerRunning is bool
+          && data.turnDuration is int
+          && data.turnCount is int;
+    }
+
+    // Player schema validation helper
+    function isValidPlayer(data) {
+      return data.id is string && data.id.size() <= 128
+          && data.name is string && data.name.size() >= 1 && data.name.size() <= 30
+          && data.character is string && data.character.size() <= 100
+          && data.hasGuessed is bool
+          && data.avatarSeed is string && data.avatarSeed.size() <= 50
+          && data.isCreator is bool;
+    }
+
+    // TurnLog schema validation helper
+    function isValidTurnLog(data) {
+      return data.id is string && data.id.size() <= 128
+          && data.playerName is string && data.playerName.size() >= 1 && data.playerName.size() <= 30
+          && data.targetCharacter is string && data.targetCharacter.size() <= 100
+          && data.result is string && (data.result == 'yes' || data.result == 'no' || data.result == 'neutral')
+          && data.timestamp is string && data.timestamp.size() <= 30;
+    }
+
+    // Room match rules
+    match /rooms/{roomId} {
+      allow get: if true;
+      allow list: if false; // Room search queries not permitted globally
+      allow create: if isValidId(roomId) && isValidRoom(incoming()) && incoming().createdAt == request.time;
+      allow update: if isValidRoom(incoming());
+      allow delete: if false;
+
+      // Players subcollection
+      match /players/{playerId} {
+        allow get: if true;
+        allow list: if true; // Needed for real-time player list sync
+        allow create: if isValidId(playerId) && isValidPlayer(incoming()) && incoming().joinedAt == request.time;
+        allow update: if isValidPlayer(incoming());
+        allow delete: if true; // Allow players to leave the lobby
+      }
+
+      // History log subcollection
+      match /logs/{logId} {
+        allow get: if true;
+        allow list: if true; // Needed for real-time log timeline sync
+        allow create: if isValidId(logId) && isValidTurnLog(incoming());
+        allow update, delete: if false;
+      }
+    }
+  }
+}
