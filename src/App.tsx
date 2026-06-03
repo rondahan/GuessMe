@@ -430,26 +430,28 @@ export default function App() {
   return (
     <div className="min-h-screen bg-black text-zinc-100 flex flex-col selection:bg-white selection:text-black overflow-x-hidden relative" dir="rtl">
       
-      {/* Sleek Header */}
-      <header className="h-16 border-b border-zinc-900 flex items-center justify-between px-4 md:px-8 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-40">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.15)]">
-            <div className="w-3 h-3 bg-black rotate-45"></div>
+      {/* Header — below status bar / notch (safe-area) */}
+      <header className="sticky top-0 z-40 border-b border-zinc-900 bg-zinc-950/50 backdrop-blur-md pt-[max(2.75rem,env(safe-area-inset-top,2.75rem))]">
+        <div className="h-14 sm:h-16 flex items-center justify-between px-4 md:px-8">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-white flex items-center justify-center shadow-[0_0_15px_rgba(255,255,255,0.15)]">
+              <div className="w-3 h-3 bg-black rotate-45"></div>
+            </div>
+            <span className="text-lg font-bold tracking-tighter text-white font-sans">נחש אותי <span className="text-zinc-500 font-light">?</span></span>
           </div>
-          <span className="text-lg font-bold tracking-tighter text-white font-sans">נחש אותי <span className="text-zinc-500 font-light">?</span></span>
+
+          {room && (
+            <div className="flex items-center gap-3 md:gap-6">
+              <div className="px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900 text-[11px] font-medium text-zinc-400">
+                קוד חדר: <span className="text-white font-black tracking-wide font-mono">{room.code}</span>
+              </div>
+              <div className="h-4 w-[1px] bg-zinc-800 hidden sm:block"></div>
+              <div className="text-xs text-zinc-400 hidden sm:block">
+                חבילה: <span className="text-white font-semibold">{room.categoryName}</span>
+              </div>
+            </div>
+          )}
         </div>
-        
-        {room && (
-          <div className="flex items-center gap-3 md:gap-6">
-            <div className="px-2.5 py-1 rounded-full border border-zinc-800 bg-zinc-900 text-[11px] font-medium text-zinc-400">
-              קוד חדר: <span className="text-white font-black tracking-wide font-mono">{room.code}</span>
-            </div>
-            <div className="h-4 w-[1px] bg-zinc-800 hidden sm:block"></div>
-            <div className="text-xs text-zinc-400 hidden sm:block">
-              חבילה: <span className="text-white font-semibold">{room.categoryName}</span>
-            </div>
-          </div>
-        )}
       </header>
 
       {/* Subtle light leak */}
