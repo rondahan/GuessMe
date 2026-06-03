@@ -4,6 +4,11 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "version:sync": "node scripts/sync-version.mjs",
+    "predev": "npm run version:sync",
+    "prebuild": "npm run version:sync",
+    "version:patch": "npm version patch --no-git-tag-version && npm run version:sync",
+    "version:minor": "npm version minor --no-git-tag-version && npm run version:sync",
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
     "build:cap": "CAPACITOR=true vite build",
@@ -13,8 +18,9 @@
     "icons": "node scripts/generate-pwa-icons.mjs",
     "cap:assets": "npx capacitor-assets generate --assetPath assets --iconBackgroundColor '#5b21b6' --splashBackgroundColor '#5b21b6'",
     "postinstall": "node scripts/generate-pwa-icons.mjs || true",
-    "cap:sync": "npm run build:cap && npx cap sync",
-    "cap:ios": "npm run cap:sync && npx cap open ios",
+    "cap:setup:ios": "node scripts/setup-ios.mjs",
+    "cap:sync": "npm run version:sync && npm run build:cap && npx cap sync",
+    "cap:ios": "npm run cap:setup:ios && npm run cap:sync && npx cap open ios",
     "cap:android": "npm run build:cap && npx cap sync android && npx cap open android"
   },
   "dependencies": {

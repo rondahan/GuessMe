@@ -47,14 +47,21 @@ npm run preview
 
 אחרי deploy ב-HTTPS: התקנה למסך הבית.
 
+## גרסאות
+
+מקור: `package.json` → `version`. לפני build רץ `version:sync` (יוצר `version.json`).
+
+| פקודה | שימוש |
+|--------|--------|
+| `npm run version:patch` | 1.0.0 → 1.0.1 |
+| `npm run version:minor` | 1.0.0 → 1.1.0 |
+| `npm run version:sync` | עדכון build + iOS Info.plist |
+
 ## iOS (Capacitor)
 
 ```bash
-npm run icons
-npm run build:cap
-npx cap add ios
-npm run cap:assets   # אייקון + splash ל-iOS/Android
-npm run cap:ios
+brew install cocoapods   # פעם ראשונה
+npm run cap:ios          # setup + אייקונים + sync + Xcode
 ```
 
 דרישות: macOS, Xcode, CocoaPods.

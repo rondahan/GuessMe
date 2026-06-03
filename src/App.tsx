@@ -428,7 +428,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 flex flex-col justify-between selection:bg-white selection:text-black overflow-x-hidden relative" dir="rtl">
+    <div className="min-h-screen bg-black text-zinc-100 flex flex-col selection:bg-white selection:text-black overflow-x-hidden relative" dir="rtl">
       
       {/* Sleek Header */}
       <header className="h-16 border-b border-zinc-900 flex items-center justify-between px-4 md:px-8 bg-zinc-950/50 backdrop-blur-md sticky top-0 z-40">
@@ -505,27 +505,6 @@ export default function App() {
           </>
         )}
       </main>
-
-      {/* footer */}
-      <footer className="mt-auto border-t border-zinc-900 bg-zinc-950/20">
-        <div className="h-[2px] bg-zinc-900 relative">
-          <div 
-            className="h-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.7)] transition-all duration-500"
-            style={{ 
-              width: !room ? '25%' : room.status === 'lobby' ? '50%' : room.status === 'active' ? '75%' : '100%' 
-            }}
-          ></div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono text-zinc-500">
-          <span>{new Date().getFullYear()} • נחש אותי - משחק מסיבה ישראלי 🌟</span>
-          <span className="flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            סינכרון מולטיפלייר בזמן אמת
-          </span>
-          <span className="hidden sm:inline">מתוצרת כחול לבן 🇮🇱</span>
-        </div>
-      </footer>
     </div>
   );
 }
